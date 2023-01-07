@@ -1,7 +1,7 @@
 import React from 'react'
 
 import './Form.css';
-// import '../../index.css';
+import '../../index.css';
 import { NavLink } from 'react-router-dom';
 
 function Form({ heading,input,extra }) {
@@ -11,7 +11,7 @@ function Form({ heading,input,extra }) {
         
         {
             input.map(i=>{
-                return <input className='input para' key={i.placeholder} type={i.type} placeholder={i.placeholder} />
+                return <input className='input' key={i.placeholder} type={i.type} placeholder={i.placeholder} />
             })
         }
 

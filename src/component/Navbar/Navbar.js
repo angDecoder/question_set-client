@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 import './Navbar.css';
-// import '../../index.css';
+import '../../index.css';
 import hamburger from '../../assets/hamburger.svg';
 import logo from '../../assets/logo.jpg';
 import cross from '../../assets/cross.svg';

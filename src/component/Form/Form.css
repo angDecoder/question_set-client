@@ -15,25 +15,7 @@
     display: flex;
     gap : 1em;
 }
-.input{
-    width: 50%;
-    padding : 0.2em 0.5em;
-    transition: width 200ms ease-in;
-    outline: none;
-    border: 2px solid var(--border);
-    border-radius: 0.4em;
-    background-color: var(--border);
-    color : var(--text2);
-}
-.input::placeholder{
-    text-align: center;
-    color : var(--text2);
-}
-.input:focus{
-    width: 80%;
-    border: 2px solid var(--text1);
-    box-shadow: 5px 5px 10px var(--text1);
-}
+
 .form__link{
     font-size: 1.3rem;
     text-decoration: none;
@@ -47,10 +29,6 @@
 @media screen and ( min-width : 850px ) {
     #form{
         width: 50vw;
-    }
-    .input{
-        font-size: 1.2rem;
-        /* width: 30%; */
     }
     .form__link{
         font-size: 1.2rem;

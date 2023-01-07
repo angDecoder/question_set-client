@@ -4,7 +4,7 @@
     --box1 : #161c48;
     --box2 : #0a0733;
     --border : #323956;
-    --text1 : rgb(209, 93, 255);
+    --text1 : #d15dff;
     --text2 : rgb(235, 235, 235);
     --tabs : 480px;
     --laptops : 800px;
@@ -76,12 +76,12 @@ main{
     line-height: 1.4;
 }
 .span{
-    /* font-size: 1.4rem; */
+    font-size: 1rem;
     color : white;
     background-color: var(--border);
     padding : 0.1em 0.6em;
     border-radius: 0.4em;
-    margin : 0.2em 0.4em;
+    margin : 0.1em;
     /* font-weight: bold; */
     font-style: italic;
 }
@@ -110,6 +110,7 @@ main{
     height: var(--svgheight);
     background-color: var(--border);
     border-radius: 0.3em;
+    padding : 0.2em;
 }
 /******************** BOXES ***************/
 
@@ -117,16 +118,11 @@ main{
 /******************* BUTTON ***************/
 .btn{
     color : var(--border);
-    min-width: 120px;
-    font-size: 1.4rem;
+    padding : 0.2em 1em;
+    font-size: 1.3rem;
     font-weight: bold;
-    font-style: oblique;
-    outline: none;
-    padding : 0.3em 0em;
-    /* margin : 1em; */
     border-radius: 0.4em;
-    border : 1.5px solid var(--box1);
-    /* box-shadow:  */
+    border : 2px solid var(--border);
 }
 .btn[color='green']{
     background-color: var(--btn1);
@@ -137,6 +133,29 @@ main{
     box-shadow: 4px 4px 7px orangered;
 }
 /******************* BUTTON ***************/
+
+
+.input{
+    width: 50vw;
+    font-size: 1.4rem;
+    padding : 0.2em 0.5em;
+    transition: width 200ms ease-in;
+    outline: none;
+    border: 2px solid var(--border);
+    border-radius: 0.4em;
+    background-color: var(--border);
+    color : var(--text2);
+}
+.input::placeholder{
+    text-align: center;
+    color : var(--text2);
+}
+.input:focus{
+    width: 80vw;
+    border: 2px solid var(--text1);
+    box-shadow: 5px 5px 10px var(--text1);
+}
+
 
 @media screen and (min-width: 480px) {
     .head1{
@@ -153,13 +172,29 @@ main{
         line-height: 1.7;
     }
     .btn{
+        padding: 0.3em 0em;
         font-size: 1.8rem;
         min-width: 160px;
+    }
+    .input{
+        font-size: 1.8rem;
+        width: 40vw;
+        padding : 0.3em 0.6em;
+    }
+    .input:focus{
+        width: 60vw;
+    }
+    .svg-img{
+        width: 50px;
+        height: 50px;
+    }
+    .span{
+        font-size: 1.5rem;
     }
 }
 @media screen and ( min-width : 900px ) {
     .head1{
-        font-size: 2.8rem;
+        font-size: 2.5rem;
     }
 
     .head2{
@@ -167,12 +202,29 @@ main{
     }
 
     .head3{
-        font-size: 1.8rem;
+        font-size: 1.9rem;
     }
     .para{
         font-size: 1.5rem;
     }
     .btn{
+        padding : 0;
+        min-width: 100px;
         font-size: 1.3rem;
+    }
+    .span{
+        font-size: 1.2rem;
+    }
+    .svg-img{
+        width: 40px;
+        height: 40px;
+    }
+    .input{
+        font-size: 1.5rem;
+        padding : 0.2em 1em;
+        width: 20vw;
+    }
+    .input:focus{
+        width: 40vw;
     }
 }

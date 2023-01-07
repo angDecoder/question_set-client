@@ -1,4 +1,4 @@
-#challenges{
+#question{
     display: flex;
     flex-direction: column;
     gap : 1em;
@@ -6,7 +6,7 @@
     text-align: center;
 }
 
-.challenges__sheet{
+.question__sheet{
     /* background-color: red; */
     display: flex;
     flex-direction: column;
@@ -21,24 +21,29 @@
     border-radius: 0.4em;
 
 }
-.challenges__tags{
+.question__tags{
     width: 100%;
 }
-
-.challenges__bar{
+.question__trash{
+    position: absolute;
+    top : -1em;
+    right : -0.5em;
+    padding : 0.2em;
+}
+.question__bar{
     border : 1px solid var(--border);
     width: 90%;
     margin-top : 0.4em;
     border-radius: 0.4em;
     /* position: relative; */
 }
-.challenges__progress{
+.question__progress{
     background-color: var(--btn1);
     height: 7px;
     border-radius: 0.4em;
     width: 50%;
 }
-.challenges__info{
+.question__info{
     position: absolute;
     top : -1em;
     left : -0.5em;
@@ -46,14 +51,7 @@
     font-weight: bold;
     color: var(--text1);
 }
-#challenges__img{
-    position: absolute;
-    top : -1em;
-    right : -5px;
-    display: flex;
-    gap : 0.2em;
-}
-#challenges__searchbox{
+#question__searchbox{
     /* background-color: red; */
     display: flex;
     gap : 1em;
@@ -64,7 +62,7 @@
     justify-content: center;
     align-items: center;
 }
-.challenges__link{
+.question__link{
     text-decoration: none;
     text-align: center;
     /* font-size: ; */
@@ -72,19 +70,19 @@
 }
 
 @media  screen and (min-width : 480px) {
-    #challenges{
+    #question{
         gap : 2em;
     }
-    .challenges__progress{
+    .question__progress{
         height: 15px;
     }
 }
 @media screen and ( min-width : 850px ) {
-    .challenges__sheet{
+    .question__sheet{
         width: 65vw;
         margin : 0 auto;
     }
-    .challenges__progress{
+    .question__progress{
         height: 8px;
     }
 }
