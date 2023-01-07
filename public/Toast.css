@@ -1,0 +1,85 @@
+/********************* DEFAULT ***************/
+
+
+.toast{
+    font-size: 1.5rem;
+    padding : 0.7em 0.3em;
+    border : 1px solid black;
+    border-radius: 0.4em;
+    z-index: 20;
+    position: relative;
+    overflow: hidden;
+    background-color: red;
+    transition: transform 300ms ease-in;
+}
+.toast::after{
+    content: '';
+    position: absolute;
+    bottom : 0;
+    left : calc(1%*var(--progress,0));
+    right : 0;
+    height: 5px;
+    background-color: lime;
+}
+.toast-container{
+    width: 80vw;
+    position: fixed;
+    z-index: 22;
+    display: flex;
+    gap : 0.5em;
+    
+}
+
+
+/********************* DEFAULT ***************/
+
+
+
+
+/******************* TRANSITION **************/
+
+.toast-container[data-position$='-left'] > .toast{
+    transform: translateX(-110%);
+}
+
+.toast-container[data-position$='-right'] > .toast{
+    transform: translateX(110%);
+}
+
+.toast-container[data-position='top-center'] > .toast{
+    transform : translateY(-110%);
+}
+.toast-container[data-position='bottom-center'] > .toast{
+    transform : translateY(110%);
+}
+
+.toast-container > .toast.show{
+    transform : translate(0,0);
+}
+
+/******************* TRANSITION **************/
+
+
+
+
+/********************** POSITION ****************/
+.toast-container[data-position^='top-']{
+    flex-direction: column-reverse;
+    top : 20px;
+}
+.toast-container[data-position^='bottom-']{
+    /* background-color: green; */
+    flex-direction: column;
+    bottom : 20px;
+}
+.toast-container[data-position$='-center']{
+    left : 50%;
+    transform: translateX(-50%);
+}
+.toast-container[data-position$='-right']{
+    right : 20px;
+}
+.toast-container[data-position$='-left']{
+    left : 20px;
+}
+/********************** POSITION ****************/
