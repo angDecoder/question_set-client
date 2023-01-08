@@ -1,17 +1,30 @@
-/********************* DEFAULT ***************/
-
-
-.toast{
-    font-size: 1.5rem;
-    padding : 0.7em 0.3em;
-    border : 1px solid black;
-    border-radius: 0.4em;
-    z-index: 20;
-    position: relative;
-    overflow: hidden;
-    background-color: red;
-    transition: transform 300ms ease-in;
+.toast-container{
+    width: 75vw;
+    position: fixed;
+    z-index: 100;
+    /* background-color: blue; */
+    display: flex;
+    gap : 1em;
+    padding : 1em 0em;
 }
+.toast{
+    background-color: rgb(42, 42, 82);
+    backdrop-filter: blur(4px);
+    color : rgb(215, 213, 213);
+    border : 2px solid rgb(36, 36, 65);
+    border-bottom: none;
+    border-radius: 0.4em;
+    overflow: hidden;
+    font-size: 1.6rem;
+    padding : 0.5em 0.5em;
+    position: relative;
+    opacity: 0;
+    /* transition: transform 450ms ease-out,opacity 500ms ease-out,scale 400ms ease; */
+    transition-property: transform opacity scale;
+    transition-duration: 450ms;
+    transition-timing-function: ease-out;
+}  
+
 .toast::after{
     content: '';
     position: absolute;
@@ -19,67 +32,94 @@
     left : calc(1%*var(--progress,0));
     right : 0;
     height: 5px;
-    background-color: lime;
-}
-.toast-container{
-    width: 80vw;
-    position: fixed;
-    z-index: 22;
-    display: flex;
-    gap : 0.5em;
-    
+    width: 100%;
+    /* background-color: blue; */
 }
 
-
-/********************* DEFAULT ***************/
-
-
-
-
-/******************* TRANSITION **************/
-
-.toast-container[data-position$='-left'] > .toast{
-    transform: translateX(-110%);
+/************* PROGRESS BAR COLOR ************/
+.toast[data-type='message']::after{
+    background-color: rgb(51, 222, 222);  
 }
-
-.toast-container[data-position$='-right'] > .toast{
-    transform: translateX(110%);
+.toast[data-type='promise-pending']::after{
+    background-color: rgb(187, 187, 49);
 }
-
-.toast-container[data-position='top-center'] > .toast{
-    transform : translateY(-110%);
+.toast[data-type='promise-resolved']::after{
+    background-color: limegreen;
 }
-.toast-container[data-position='bottom-center'] > .toast{
-    transform : translateY(110%);
+.toast[data-type='promise-rejected']::after{
+    background-color: rgb(232, 50, 50);
 }
-
-.toast-container > .toast.show{
-    transform : translate(0,0);
-}
-
-/******************* TRANSITION **************/
+/************* PROGRESS BAR COLOR ************/
 
 
 
 
-/********************** POSITION ****************/
+
+
+
+
+/******************** POSITION ************/
 .toast-container[data-position^='top-']{
     flex-direction: column-reverse;
-    top : 20px;
+    top : 5px;
 }
 .toast-container[data-position^='bottom-']{
-    /* background-color: green; */
     flex-direction: column;
-    bottom : 20px;
+    bottom: 5px;
 }
-.toast-container[data-position$='-center']{
-    left : 50%;
-    transform: translateX(-50%);
-}
-.toast-container[data-position$='-right']{
-    right : 20px;
+.toast-container[data-position^='center-']{
+    flex-direction: column-reverse;
+    top : 50%;
+    transform: translateY(-50%);
 }
 .toast-container[data-position$='-left']{
-    left : 20px;
+    left : 5px;
 }
-/********************** POSITION ****************/
+.toast-container[data-position$='-right']{
+    /* transform: translateX(110%);; */
+    right : 5px;
+}
+
+.toast-container[data-position$='-center']{
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.toast-container[data-position$='-right'] .toast{
+    transform: translateX(110%);
+}
+.toast-container[data-position='bottom-center'] .toast{
+    transform: translateY(100%);
+}
+.toast-container[data-position$='-left'] .toast{
+    transform: translateX(-110%);
+}
+.toast-container[data-position='top-center'] .toast{
+    transform: translatey(-100%);
+}
+.toast-container .toast.show{
+    transform : translateX(0%) translateY(0%);
+    opacity: 1;
+}
+
+
+/******************** POSITION ************/
+
+@media screen and ( min-width : 480px ) {
+    .toast-container{
+        width: 60vw;
+    }
+    .toast{
+        font-size:  2.2rem;
+        padding : 0.6em;
+    }
+}
+
+@media screen and ( min-width : 850px ) {
+    .toast-container{
+        width: 40vw;
+    }
+    .toast{
+        font-size: 1.6rem;
+    }
+}

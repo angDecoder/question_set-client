@@ -1,143 +1,158 @@
 import React from 'react';
 
-const DEFAULT_OPTIONS = {
-  position : 'top-left',
-  autoClose : 3000,
-  text : 'message',
-  canClose : true,
-  showProgress : true,
+const DEFAULT = {
+  type: 'message',
+  text: 'hello',
+  position: 'top-right',
+  autoClose: 3000,
+  showProgress: true
 }
 
-class Toast{
-  #toastElem 
-  #autoCloseTimeout
+class Toast {
+  #toastElem
   #parentContainer
-  #removeBinded
-  #createdAt
-  #autoClose
+  #bindedRemove
+  #autoCloseTimeout
   #progressInterval
-  #bindedMouseLeave
-  #bindedMouseEnter
-  #hovering
-  #timeDiff = -1
+  #bindedAutoRemove
+  #startTime
+  #autoClose
+  #showProgress
+  #bindedOnEnter
+  #bindedOnLeave
+  #hovering = false
+  #timeDiff = 0
 
-  constructor(options){
+
+  constructor(options) {
     this.#toastElem = document.createElement('div');
     this.#toastElem.classList.add('toast');
-    requestAnimationFrame(()=>{
-      this.#toastElem.classList.add('show');
-    });
-    this.#createdAt = new Date()-0;
-    this.#removeBinded = this.removeElem.bind(this);
-    this.#bindedMouseLeave = this.onMouseLeave.bind(this);
-    this.#bindedMouseEnter = this.onMouseEnter.bind(this);
+    this.#bindedRemove = this.remove.bind(this);
+    this.#bindedAutoRemove = this.autoRemove.bind(this);
+    this.#bindedOnEnter = this.onhover.bind(this);
+    this.#bindedOnLeave = this.onleave.bind(this);
+    // this.#setH
+    this.#toastElem.addEventListener('click', this.#bindedRemove);
+    this.#toastElem.addEventListener('mouseenter',this.#bindedOnEnter);
+    this.#toastElem.addEventListener('mouseleave',this.#bindedOnLeave);
     this.update(options);
-    this.#toastElem.addEventListener('mouseleave',this.#bindedMouseLeave)
-    this.#toastElem.addEventListener('mouseenter',this.#bindedMouseEnter)
-    
   }
 
-  set showProgress(value){
-    if( value===false || this.#autoClose===false ) return;
-    // this.#toastElem.style.setProperty('--progress',0);
-    this.#progressInterval = setInterval(() => {
-      let timePassed = new Date() - this.#createdAt;
-      if( this.#hovering && this.#timeDiff===-1 ){
-        this.#timeDiff = timePassed;
-        // console.log(this.#timeDiff);
-        return;
-      }
-      if( this.#hovering )
-        return;
-      let progress = (timePassed/this.#autoClose)*100;
-
-      if( progress>100 ){
-        clearInterval(this.#progressInterval);
-        this.removeElem();
-        return;
-      }
-      this.#toastElem.style.setProperty('--progress',progress);
-    }, 10);
-    
+  set type(value) {
+    this.#toastElem.dataset.type = value;
   }
 
-  set canClose(value){
-    if( !value ) return;
-    this.#toastElem.addEventListener('click',this.#removeBinded);
-  }
-
-  set position(value){
-    const selector = `.toast-container[data-position=${value}]`;
-    const container = document.querySelector(selector) || 
-      this.createContainer(value);
-
-    container.append(this.#toastElem);
-  }
-
-  set text(value){
+  set text(value) {
     this.#toastElem.textContent = value;
   }
 
-  set autoClose(value){
-    this.#autoClose = value;
-    if( value===false ) return;
-    if( this.#autoCloseTimeout )
-      clearTimeout(this.#autoCloseTimeout);
-  }
-
-  removeElem(){
-    this.#toastElem.removeEventListener('click',this.#removeBinded);
-    this.#toastElem.removeEventListener('mouseleave',this.#bindedMouseLeave)
-    this.#toastElem.removeEventListener('mouseenter',this.#bindedMouseEnter)
-    
-    this.#toastElem.classList.remove('show');
-    this.#toastElem.addEventListener('transitionend',()=>{
-      clearInterval(this.#progressInterval);
-
-      const container = this.#toastElem.parentElement;
-      this.#toastElem.remove();
-      if( container?.hasChildNodes() ) 
-        return;
-      
-      container?.remove();
-    })
-  }
-
-  update(options){
-    Object.entries({...DEFAULT_OPTIONS,...options}).forEach(([key,value])=>{
-      this[key] = value;
-    })
-  }
-
-  createContainer(value){
-    if( this.#parentContainer && !this.#parentContainer?.hasChildNodes() )
+  set position(value) {
+    if (this.#parentContainer && this.#parentContainer.hasChildNodes())
       this.#parentContainer.remove();
 
-    this.#parentContainer = document.createElement('div');
-    this.#parentContainer.classList.add('toast-container');
-    this.#parentContainer.dataset.position = value;
-    document.body.append(this.#parentContainer);
-    return this.#parentContainer;
+    this.#parentContainer = createParent(value);
+    this.#parentContainer.append(this.#toastElem);
+    requestAnimationFrame(() => {
+      this.#toastElem.classList.add('show');
+    })
+    // console.log(this.#parentContainer);
   }
-  onMouseLeave(){
-    this.#hovering = false;
-    // console.log(this.#createdAt-0);
-    this.#createdAt = new Date() - this.#timeDiff;
-    // console.log(this.#createdAt);
-    this.#timeDiff = -1;
-    console.log('leave');
+
+  set autoClose(value) {
+    this.#autoClose = value;
+    this.#toastElem.style.setProperty('--progress', 0);
   }
-  onMouseEnter(){
-    console.log('entered');
-    this.#timeDiff = -1;
+
+  set showProgress(value) {
+    this.#showProgress = value;
+  }
+
+
+  update(options) {
+    options = { ...DEFAULT, ...options };
+
+    if (options.type === 'promise-pending')
+      options = { ...options, autoClose: false, showProgress: false };
+
+    console.log(options);
+    Object.entries(options).forEach(([key, value]) => {
+      this[key] = value;
+    })
+    this.#startTime = new Date() - 0;
+    this.#bindedAutoRemove();
+
+  }
+
+  remove() {
+    clearTimeout(this.#autoCloseTimeout);
+    clearInterval(this.#progressInterval);
+    this.#toastElem.removeEventListener('click', this.#bindedRemove);
+    this.#toastElem.classList.remove('show');
+    const fun = () => {
+      this.#toastElem.removeEventListener('transitionend',fun);
+      this.#toastElem.remove();
+      if (this.#parentContainer?.hasChildNodes())
+        return;
+      this.#parentContainer.remove();
+    }
+    this.#toastElem.addEventListener('transitionend',fun);
+  }
+
+  autoRemove() {
+    if (this.#autoClose === false)
+      return;
+
+    if (this.#showProgress === false) {
+      this.#autoCloseTimeout = setTimeout(() => {
+        this.remove();
+      }, this.#autoClose);
+    }
+    else {
+      this.onleave();
+    }
+  }
+  
+  onhover(){
     this.#hovering = true;
+    clearInterval(this.#progressInterval);
+    this.#timeDiff = new Date() - this.#startTime;
+    console.log('enter');
+  }
+  onleave(){
+    this.#hovering = false;
+    this.#startTime = new Date() - this.#timeDiff;
+    this.#progressInterval = setInterval(() => {        
+      let timepassed = new Date() - (this.#startTime);
+      let progress = (timepassed / this.#autoClose) * 100;
+      if (progress > 100) {
+        this.remove();
+        return;
+      }
+      console.log(progress)
+      this.#toastElem.style.setProperty('--progress', progress);
+    }, 10);
+    console.log('leave');
   }
 }
 
+const createParent = (value) => {
+  const selector = `.toast-container[data-position=${value}]`;
+  let container = document.querySelector(selector);
+  if (container)
+    return container;
+
+  container = document.createElement('div');
+  container.classList.add('toast-container');
+  container.dataset.position = value;
+  document.body.append(container);
+  return container;
+}
 
 function useToast() {
-  const createToast = (options)=>{
-    return new Toast(options);
+  const createToast = (options) => {
+    const toast = new Toast(options);
+
+    return toast;
   }
 
   return createToast;

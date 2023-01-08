@@ -1,13 +1,21 @@
 import React from 'react';
+import useToast from '../../hooks/useToast';
 
 import '../../Toast.css';
 import '../../index.css';
 
-function Home() {
-  return (
+function Home(){
+  const createToast = useToast();
+  const getToast = ()=>{
+    let toast = createToast({type : 'promise-rejected',autoClose : 10000});
+    
+  }
 
-    <div></div>
-
+  return (  
+    <>
+      <button onClick={getToast} className='btn' color='green'>Click</button>
+    
+    </>
   )
 }
 
