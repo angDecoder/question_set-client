@@ -11,8 +11,8 @@
     background-color: rgb(42, 42, 82);
     backdrop-filter: blur(4px);
     color : rgb(215, 213, 213);
-    border : 2px solid rgb(36, 36, 65);
-    border-bottom: none;
+    /* border : 2px solid rgb(36, 36, 65);
+    border-bottom: none; */
     border-radius: 0.4em;
     overflow: hidden;
     font-size: 1.6rem;
@@ -40,14 +40,28 @@
 .toast[data-type='message']::after{
     background-color: rgb(51, 222, 222);  
 }
+.toast[data-type='message']{
+    border : 1px solid  rgb(51, 222, 222);  
+}
+.toast[data-type='promise-pending']{
+    border: 1px solid rgb(187, 187, 49);
+}
 .toast[data-type='promise-pending']::after{
     background-color: rgb(187, 187, 49);
 }
 .toast[data-type='promise-resolved']::after{
     background-color: limegreen;
 }
+.toast[data-type='promise-resolved']{
+    border: 1px solid limegreen;
+    border-bottom: none;
+}
 .toast[data-type='promise-rejected']::after{
     background-color: rgb(232, 50, 50);
+}
+.toast[data-type='promise-rejected']{
+    border: 1px solid rgb(232, 50, 50);
+    border-bottom: none;
 }
 /************* PROGRESS BAR COLOR ************/
 

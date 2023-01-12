@@ -6,7 +6,7 @@ function App() {
   return (
     <>
     {/* <Toast /> */}
-      {/* <Navbar /> */}
+      <Navbar />
       <main id='main'>
         <Outlet />
       </main>

@@ -18,6 +18,7 @@ function Sheet() {
 
     const [question, setQuestion] = useState([
         {
+            id : 'lkdk',
             title: 'question 1',
             hint: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet, earum!",
             solved: true,
@@ -27,23 +28,47 @@ function Sheet() {
             },
             tags: ['hard', 'binary_search', 'array'],
             link: '#'
-        }
+        },
+        {
+            id : 'lkdkk',
+            title: 'question 1',
+            hint: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet, earum!",
+            solved: true,
+            solution: {
+                language: 'javascript',
+                code: 'let a = 7;\nconsole.log(a)\n'
+            },
+            tags: ['hard', 'binary_search', 'array'],
+            link: '#'
+        },
+        {
+            id : 'lkkdk',
+            title: 'question 1',
+            hint: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet, earum!",
+            solved: true,
+            solution: {
+                language: 'javascript',
+                code: 'let a = 7;\nconsole.log(a)\n'
+            },
+            tags: ['hard', 'binary_search', 'array'],
+            link: '#'
+        },
     ])
 
     return (
         <>
             <div id='question'>
                 <h1 className='head1'>{sheetInfo.title}</h1>
-                {/* <div id='question__searchbox'>
+                <div id='question__searchbox'>
                     <input type="text" id='question__search' className='input' placeholder='Search Here....' />
                     <img src={filter} alt="filter" className='svg-img' />
-                </div> */}
-                {/* <div id='queston__info'>
+                </div>
+                <div id='queston__info'>
                     <div id='question__bar'>
                         <div id='question__'></div>
                     </div>
                     <p>{sheetInfo.solved}/{sheetInfo.total}</p>
-                </div> */}
+                </div>
                 
                 {
                     question.map(s => {

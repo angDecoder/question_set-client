@@ -55,7 +55,7 @@ class Toast {
     requestAnimationFrame(() => {
       this.#toastElem.classList.add('show');
     })
-    // console.log(this.#parentContainer);
+    // // console.log(this.#parentContainer);
   }
 
   set autoClose(value) {
@@ -70,11 +70,12 @@ class Toast {
 
   update(options) {
     options = { ...DEFAULT, ...options };
+    console.log(options);
 
     if (options.type === 'promise-pending')
       options = { ...options, autoClose: false, showProgress: false };
 
-    console.log(options);
+    // // console.log(options);
     Object.entries(options).forEach(([key, value]) => {
       this[key] = value;
     })
@@ -116,7 +117,7 @@ class Toast {
     this.#hovering = true;
     clearInterval(this.#progressInterval);
     this.#timeDiff = new Date() - this.#startTime;
-    console.log('enter');
+    // // console.log('enter');
   }
   onleave(){
     this.#hovering = false;
@@ -128,10 +129,10 @@ class Toast {
         this.remove();
         return;
       }
-      console.log(progress)
+      // // console.log(progress)
       this.#toastElem.style.setProperty('--progress', progress);
     }, 10);
-    console.log('leave');
+    // console.log('leave');
   }
 }
 

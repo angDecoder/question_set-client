@@ -7,8 +7,10 @@ import '../../index.css';
 function Home(){
   const createToast = useToast();
   const getToast = ()=>{
-    let toast = createToast({type : 'promise-rejected',autoClose : 10000});
-    
+    let toast = createToast({type : 'promise-pending',autoClose : 10000});
+    setTimeout(() => {
+      toast.update({ type : 'promise-rejected' });
+    }, 2000);
   }
 
   return (  
