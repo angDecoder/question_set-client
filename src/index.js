@@ -10,6 +10,7 @@ import Sheet from './component/Sheet/Sheet';
 import Solution from './component/Solution/Solution';
 import { Provider } from 'react-redux';
 import store from './app/store';
+import ProtectedRoute from './component/ProtectedRoute/ProtectedRoute';
 
 
 const root = ReactDom.createRoot(document.getElementById('root'));
@@ -21,9 +22,14 @@ root.render(
                     <Route path='/' element={<Home />} />
                     <Route path='/login' element={<Login />} />
                     <Route path='/register' element={<Register />} />
-                    <Route path='/challenges' element={<Challenges />} />
-                    <Route path='/sheet/:id' element={<Sheet />} />
-                    <Route path='/solution/:id' element={<Solution />} />
+
+                    <Route element={<ProtectedRoute />}>
+                        <Route path='/challenges' element={<Challenges />} />
+                        <Route path='/sheet/:id' element={<Sheet />} />
+                        <Route path='/solution/:id' element={<Solution />} />
+                    </Route>
+
+
                 </Route>
             </Routes>
         </BrowserRouter>

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import axios from 'axios';
+import { useNavigate,useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import Form from './Form';
@@ -8,6 +8,11 @@ import { loginUser } from '../../features/userSlice';
 
 function Login() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location?.state?.from || '/';
+    console.log(from);
+
     const input = [
         {
             type : 'email',
@@ -38,8 +43,11 @@ function Login() {
             return;
         }
 
-        dispatch(loginUser({email,password}));
+        dispatch(loginUser({email,password,from,navigate}));
     }
+
+
+
   return (
     <Form heading='Login' input={input} extra={extra} onSubmitHandler={login} />
   )
