@@ -4,7 +4,7 @@ const DEFAULT = {
   type: 'message',
   text: 'hello',
   position: 'top-right',
-  autoClose: 3000,
+  autoClose: 5000,
   showProgress: true
 }
 
@@ -70,7 +70,7 @@ class Toast {
 
   update(options) {
     options = { ...DEFAULT, ...options };
-    console.log(options);
+    // console.log(options);
 
     if (options.type === 'promise-pending')
       options = { ...options, autoClose: false, showProgress: false };
