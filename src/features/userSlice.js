@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import useToast from "../hooks/useToast";
 import axios  from "axios";
-import { useNavigate } from 'react-router-dom';
 
 const initialState = {
   username : '',
@@ -30,6 +29,24 @@ export const loginUser = createAsyncThunk(
     }
 );
 
+export const autoLoginUser = createAsyncThunk(
+    'user/autologin',
+    async({ refreshToken },thunkApi)=>{
+        const createToast = useToast();
+        const toast = createToast({ text : 'logging in', type : 'promise-pending' });
+
+        try {
+            const res = await axios.post('http://localhost:3500/user/autologin',{
+                refreshToken
+            });
+            return { data : res.data.user,toast };
+        } catch (error) {
+            console.log(error);
+            return thunkApi.rejectWithValue({ message : error.response.data.message,toast });
+        }
+    }
+)
+
 const userSlice = createSlice({
     name : 'user',
     initialState,
@@ -45,10 +62,20 @@ const userSlice = createSlice({
             state.accessToken = payload.data.accessToken;
             state.loggedIn = true;
             localStorage.setItem('questionset_jwt',payload.data.refreshToken);
-            payload.toast.update({ text : 'logged in', type : "promise-resolved" });
+            payload.toast.update({ text : `logged in as "${state.username}"`, type : "promise-resolved" });
         })
         .addCase(loginUser.rejected,(state,{ payload })=>{
-            payload.toast.update({ text : payload.message, type : "promise-rejected" });
+            payload.toast.update({ text : payload.message || "not logged in", type : "promise-rejected" });
+        })
+        .addCase(autoLoginUser.fulfilled,(state,{ payload })=>{
+            state.username = payload.data.username;
+            state.email = payload.data.email;
+            state.accessToken = payload.data.accessToken;
+            state.loggedIn = true;
+            payload.toast.update({ type : 'promise-resolved', text : `logged in as "${state.username}"` });
+        })
+        .addCase(autoLoginUser.rejected,(state,{ payload })=>{
+          payload.toast.update({ type : 'promise-rejected', text : payload?.message || 'not logged in' });
         })
     }
 })
