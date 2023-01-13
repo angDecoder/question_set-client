@@ -1,11 +1,13 @@
-import useToast from "../hooks/useToast";
 import axios from "axios";
+const baseAxios = axios.create({
+    baseURL : process.env.REACT_APP_BASE_URL
+});
 
 
 export const loginUserApi = async ({ email, password, navigate, from,toast }, thunkApi) => {
 
     try {
-        const res = await axios.post('http://localhost:3500/user/login', {
+        const res = await baseAxios.post('/user/login', {
             email,
             password
         });
@@ -21,7 +23,7 @@ export const loginUserApi = async ({ email, password, navigate, from,toast }, th
 export const autologinApi = async ({ refreshToken,toast }, thunkApi) => {
 
     try {
-        const res = await axios.post('http://localhost:3500/user/autologin', {
+        const res = await baseAxios.post('/user/autologin', {
             refreshToken
         });
         toast.update({ type : 'promise-resolved', text : `logged in as "${res.data.user.username}"` })
@@ -36,7 +38,7 @@ export const autologinApi = async ({ refreshToken,toast }, thunkApi) => {
 export const logoutUserApi = async ({ email,toast },thunkApi) => {
 
     try {
-        const res = await axios.post('http://localhost:3500/user/logout', {
+        const res = await baseAxios.post('/user/logout', {
             email
         });
         toast.update({ type : 'promise-resolved', text : "logged out" });
@@ -50,7 +52,7 @@ export const logoutUserApi = async ({ email,toast },thunkApi) => {
 
 export const registerUserApi = async ({ username,password,email,toast })=>{
     try {
-        const res = axios.post('http://localhost:3500/user/register',{
+        const res = baseAxios.post('http://localhost:3500/user/register',{
             username,
             password,
             email
@@ -61,4 +63,11 @@ export const registerUserApi = async ({ username,password,email,toast })=>{
         toast.update({ type : 'promise-rejected', text : 'could not register user' });
         console.log(error);
     }
+}
+
+export const refreshAccessToken =  async ()=>{
+    const refreshToken = localStorage.getItem('questionset_jwt') || "";
+    const res = await baseAxios.post('/user/refresh',{ refreshToken });
+    // console.log('new access : ', res.data.accessToken);
+    return res?.data?.accessToken;
 }

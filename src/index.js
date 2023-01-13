@@ -12,6 +12,11 @@ import { Provider } from 'react-redux';
 import store from './app/store';
 import ProtectedRoute from './component/ProtectedRoute/ProtectedRoute';
 import Logout from './component/Logout/Logout';
+// import dotenv from 'dotenv';
+
+// dotenv.config();
+
+// console.log(process.env.BASE_URL)
 
 const root = ReactDom.createRoot(document.getElementById('root'));
 root.render(

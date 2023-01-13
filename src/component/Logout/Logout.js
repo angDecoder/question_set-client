@@ -9,12 +9,12 @@ function Logout() {
     const dispatch = useDispatch();
     const loggedIn = useSelector(state=>state.user.loggedIn);
     const email = useSelector(state=>state.user.email);
-    useEffect(()=>{
+    // useEffect(()=>{
         if( loggedIn ){
             const toast = createToast({ type : 'promise-pending', text : 'signing out' });
             dispatch(logoutUser({ email,toast }));
         }
-    },[])
+    // },[])
     return <Navigate to='/' replace />
 }
 
