@@ -42,8 +42,8 @@ function Login() {
             createToast({ text : 'email not valid' });
             return;
         }
-
-        dispatch(loginUser({email,password,from,navigate}));
+        const toast = createToast({ text : 'loggging in' , type : "promise-pending" });
+        dispatch(loginUser({email,password,from,navigate,toast}));
     }
 
 

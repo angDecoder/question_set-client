@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import Form from './Form';
 import useToast from '../../hooks/useToast';
-import axios from 'axios';
+import { registerUserApi } from '../../api/User';
 
 function Register() {
     const input = [
@@ -51,18 +51,7 @@ function Register() {
         }
 
         const toast = createToast({ text : 'registering user', type : 'promise-pending' });
-        try {
-            const res = axios.post('http://localhost:3500/user/register',{
-                username,
-                password,
-                email
-            });
-            toast.update({ text : 'user registered', type : 'promise-resolved' });
-            
-        } catch (error) {
-            toast.update({ type : 'promise-rejected', text : 'could not register user' });
-            console.log(error);
-        }
+        registerUserApi({ username,password,email,toast });
         
     }
   return (
