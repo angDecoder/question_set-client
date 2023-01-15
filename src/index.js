@@ -12,11 +12,9 @@ import { Provider } from 'react-redux';
 import store from './app/store';
 import ProtectedRoute from './component/ProtectedRoute/ProtectedRoute';
 import Logout from './component/Logout/Logout';
-// import dotenv from 'dotenv';
+import AddChallenge from './component/AddChallenge/AddChallenge';
+import UpdateChallenge from './component/UpdateChallenge/UpdateChallenge';
 
-// dotenv.config();
-
-// console.log(process.env.BASE_URL)
 
 const root = ReactDom.createRoot(document.getElementById('root'));
 root.render(
@@ -30,6 +28,8 @@ root.render(
                     <Route path='/logout' element={<Logout />} />
 
                     <Route element={<ProtectedRoute />}>
+                        <Route path='/challenges/add' element={<AddChallenge />} />
+                        <Route path='/challenges/update/:id' element={<UpdateChallenge />} />
                         <Route path='/challenges' element={<Challenges />} />
                         <Route path='/sheet/:id' element={<Sheet />} />
                         <Route path='/solution/:id' element={<Solution />} />

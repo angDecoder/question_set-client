@@ -1,0 +1,44 @@
+#add-challenge{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 3em auto;
+    gap : 1em;
+}
+
+#add-challenge__tags{ 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap : 0.5em;
+    /* background-color: blue; */
+}
+#add-challenge__tags > div{ 
+    text-align: center;
+    width: 100%;
+    /* background-color: red; */
+}
+
+#add-challenge__tag{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap : 0.1em;
+}
+
+#add-challenge__tag > .span{
+    cursor: pointer;
+}
+
+@media screen and (min-width : 480px) {
+    #add-challenge{
+        width: 85%;
+    }
+}
+@media screen and ( min-width : 850px ) {
+    #add-challenge{
+        width: 70%;
+    }
+}

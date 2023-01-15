@@ -71,6 +71,15 @@
     font-weight: bold;
 }
 
+#add-challenges{
+    position: sticky;
+    left : 50%;
+    bottom : 15px;
+    /* border-radius: 50%; */
+    /* scale: 1.4; */
+    outline: 2px solid limegreen;
+}
+
 @media  screen and (min-width : 480px) {
     #challenges{
         gap : 2em;
