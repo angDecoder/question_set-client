@@ -12,7 +12,7 @@ export const loginUserApi = async ({ email, password, navigate, from,toast }, th
             password
         });
         navigate(from, { replace: true });
-        toast.update({ type : "promise-resolved", text : `logged in as "${res.data.user.username}"` });
+        toast.update({ type : "promise-resolved" ,text : `logged in as "${res.data.user.username}"` });
         return { data: res.data.user };
     } catch (error) {
         toast.update({ type : 'promise-rejected', text : error.response.data.message });

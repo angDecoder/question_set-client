@@ -5,7 +5,7 @@ import Navbar from './component/Navbar/Navbar';
 function App() {
   return (
     <>
-    {/* <Toast /> */}
+    <div id='toastify'></div>
       <Navbar />
       <main id='main'>
         <Outlet />

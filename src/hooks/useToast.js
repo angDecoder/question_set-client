@@ -145,7 +145,7 @@ const createParent = (value) => {
   container = document.createElement('div');
   container.classList.add('toast-container');
   container.dataset.position = value;
-  document.body.append(container);
+  document.getElementById('navbar').append(container);
   return container;
 }
 

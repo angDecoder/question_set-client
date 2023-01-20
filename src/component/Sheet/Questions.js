@@ -1,59 +1,32 @@
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { NavLink,useParams,useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { getAllQuestionApi } from '../../api/Question';
+import usePrivateAxios from '../../hooks/usePrivateAxios';
 
-import filter from '../../assets/filter.svg';
 import trash from '../../assets/trash.svg';
 import edit from '../../assets/edit.svg';
-// import copy from '../../assets/edit.svg';
-import './Sheet.css'
+import add from '../../assets/add.svg';
+import './Questions.css'
 import '../../index.css';
 
-function Sheet() {
+function Questions() {
 
-    const sheetInfo = {
-        title: 'very imp question',
-        total: 120,
-        solved: 20
-    }
+    const {id} = useParams();
+    const privateAxios = usePrivateAxios();
+    const navigate = useNavigate();
+    console.log(id);
+    const sheetInfo = useSelector( state=>{
+        return state.challenge.challenges.filter( elem=>elem.id===id )[0];
+    } );
 
-    const [question, setQuestion] = useState([
-        {
-            id : 'lkdk',
-            title: 'question 1',
-            hint: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet, earum!",
-            solved: true,
-            solution: {
-                language: 'javascript',
-                code: 'let a = 7;\nconsole.log(a)\n'
-            },
-            tags: ['hard', 'binary_search', 'array'],
-            link: '#'
-        },
-        {
-            id : 'lkdkk',
-            title: 'question 1',
-            hint: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet, earum!",
-            solved: true,
-            solution: {
-                language: 'javascript',
-                code: 'let a = 7;\nconsole.log(a)\n'
-            },
-            tags: ['hard', 'binary_search', 'array'],
-            link: '#'
-        },
-        {
-            id : 'lkkdk',
-            title: 'question 1',
-            hint: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet, earum!",
-            solved: true,
-            solution: {
-                language: 'javascript',
-                code: 'let a = 7;\nconsole.log(a)\n'
-            },
-            tags: ['hard', 'binary_search', 'array'],
-            link: '#'
-        },
-    ])
+    // console.log(sheetInfo);
+
+
+    const [question, setQuestion] = useState(sheetInfo?.questions);
+    useEffect(()=>{
+        getAllQuestionApi({ privateAxios,id });
+    },[]);
 
     return (
         <>
@@ -61,7 +34,7 @@ function Sheet() {
                 <h1 className='head1'>{sheetInfo.title}</h1>
                 <div id='question__searchbox'>
                     <input type="text" id='question__search' className='input' placeholder='Search Here....' />
-                    <img src={filter} alt="filter" className='svg-img' />
+                    {/* <img src={filter} alt="filter" className='svg-img' /> */}
                 </div>
                 <div id='queston__info'>
                     <div id='question__bar'>
@@ -92,9 +65,10 @@ function Sheet() {
                         )
                     })
                 }
+                <img src={add} alt="add" className='svg-img' id='questions__add' onClick={()=>navigate('/challenges/question/add',{ state : { challenge_id : id } })}  />
             </div>
         </>
     )
 }
 
-export default Sheet
+export default Questions

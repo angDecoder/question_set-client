@@ -25,3 +25,14 @@ export const addNewChallengeApi = async({ privateAxios,title,tags,description,to
         return Promise.reject();
     }
 }
+
+export const deleteChallengeApi = async({ privateAxios,id,toast })=>{
+    try {
+        await privateAxios.delete(`/challenges/${id}`);
+        toast.update({ text : 'challenge deleted successfully ', type : 'promise-resolved' });
+        return { id };
+    } catch (error) {
+        toast.update({ text : error?.data?.message || "some error occoured", type : 'promise-rejected' });
+        return Promise.reject();
+    }
+}

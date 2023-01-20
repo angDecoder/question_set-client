@@ -35,6 +35,7 @@ function usePrivateAxios() {
                     const newAccessToken = await refreshAccessToken();
                     dispatch(updateAccessToken({ accessToken : newAccessToken }));
                     prevRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
+                    console.log(newAccessToken);
                     return privateInstance(prevRequest);
                 }
                 else 

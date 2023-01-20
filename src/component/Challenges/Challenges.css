@@ -71,10 +71,11 @@
     font-weight: bold;
 }
 
-#add-challenges{
+#challenges__add{
     position: sticky;
     left : 50%;
     bottom : 15px;
+    translate: -50%;
     /* border-radius: 50%; */
     /* scale: 1.4; */
     outline: 2px solid limegreen;

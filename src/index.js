@@ -6,14 +6,15 @@ import Challenges from './component/Challenges/Challenges';
 import Login from './component/Form/Login';
 import Register from './component/Form/Register';
 import Home from './component/Home/Home';
-import Sheet from './component/Sheet/Sheet';
+import Sheet from './component/Sheet/Questions';
 import Solution from './component/Solution/Solution';
 import { Provider } from 'react-redux';
 import store from './app/store';
 import ProtectedRoute from './component/ProtectedRoute/ProtectedRoute';
 import Logout from './component/Logout/Logout';
 import AddChallenge from './component/AddChallenge/AddChallenge';
-import UpdateChallenge from './component/UpdateChallenge/UpdateChallenge';
+import AddQuestion from './component/AddQuestion/AddQuestion';
+// import UpdateChallenge from './component/UpdateChallenge/UpdateChallenge';
 
 
 const root = ReactDom.createRoot(document.getElementById('root'));
@@ -29,9 +30,10 @@ root.render(
 
                     <Route element={<ProtectedRoute />}>
                         <Route path='/challenges/add' element={<AddChallenge />} />
-                        <Route path='/challenges/update/:id' element={<UpdateChallenge />} />
+                        {/* <Route path='/challenges/update/:id' element={<UpdateChallenge />} /> */}
                         <Route path='/challenges' element={<Challenges />} />
-                        <Route path='/sheet/:id' element={<Sheet />} />
+                        <Route path='/challenges/:id' element={<Sheet />} />
+                        <Route path='/challenges/question/add' element={<AddQuestion />} />
                         <Route path='/solution/:id' element={<Solution />} />
                     </Route>
 

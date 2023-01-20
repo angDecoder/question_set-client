@@ -25,7 +25,7 @@ function Navbar() {
     }
     
   return (
-    <header className='box'>
+    <header id='navbar' className='box'>
         <img src={hamburger} id='head__hamburger' onClick={toggleNavbar} alt="ham" className='svg-img' />
         <nav id='nav' className='glass'>
             <NavLink onClick={toggleNavbar} className={'nav__link'} to='/'>Home</NavLink>
