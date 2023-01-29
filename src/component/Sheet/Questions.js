@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink,useParams,useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { getAllQuestionApi } from '../../api/Question';
+import { useSelector,useDispatch } from 'react-redux';
+// import { getAllQuestionApi } from '../../api/Question';
+import { getQuestion } from '../../features/questionSlice';
 import usePrivateAxios from '../../hooks/usePrivateAxios';
 
 import trash from '../../assets/trash.svg';
@@ -14,18 +15,16 @@ function Questions() {
 
     const {id} = useParams();
     const privateAxios = usePrivateAxios();
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     console.log(id);
     const sheetInfo = useSelector( state=>{
         return state.challenge.challenges.filter( elem=>elem.id===id )[0];
     } );
 
-    // console.log(sheetInfo);
-
-
-    const [question, setQuestion] = useState(sheetInfo?.questions);
+    const question = useSelector(state=>state.question.questions);
     useEffect(()=>{
-        getAllQuestionApi({ privateAxios,id });
+        dispatch(getQuestion({ privateAxios,id }));
     },[]);
 
     return (

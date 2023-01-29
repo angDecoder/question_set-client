@@ -30,12 +30,13 @@ function usePrivateAxios() {
             async (err)=>{
                 console.log('expired');
                 const prevRequest = err?.config;
-                if( err?.response?.status===401 && !prevRequest.sent ){
+                // console.log(err.response.status,prevRequest.sent);
+                if( err?.response?.status===500 && !prevRequest.sent ){
                     prevRequest.sent = true;
                     const newAccessToken = await refreshAccessToken();
+                    console.log(newAccessToken);
                     dispatch(updateAccessToken({ accessToken : newAccessToken }));
                     prevRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
-                    console.log(newAccessToken);
                     return privateInstance(prevRequest);
                 }
                 else 

@@ -8,10 +8,7 @@ import {
     deleteChallengeApi,
 } from '../api/Challenges';
 
-import {
-    addNewQuestionApi,
-    getAllQuestionApi
-} from '../api/Question';
+
 
 const initialState = {
     challenges : []
@@ -32,15 +29,7 @@ export const deleteChallenge = createAsyncThunk(
     deleteChallengeApi
 )
 
-export const getQuestion = createAsyncThunk(
-    'challenge/question/all',
-    getAllChallengesApi
-);
 
-export const addNewQuestion = createAsyncThunk(
-    'challenge/question/add',
-    addNewQuestionApi
-)
 
 const challengeSlice = createSlice({
     name: 'challenge',
@@ -55,30 +44,15 @@ const challengeSlice = createSlice({
             })
             .addCase(addNewChallenge.fulfilled,(state,{ payload })=>{
                 const challenge = payload.challenge;
-                challenge.questions = [];
+                // console.log(payload);
+                // challenge.questions = [];
                 state.challenges.push(challenge);
             })
             .addCase(deleteChallenge.fulfilled,(state,{ payload })=>{
                 // console.log(payload);
                 state.challenges = state.challenges.filter(elem=>elem.id!==payload.id);
             })
-            .addCase(getQuestion.fulfilled,( state, { payload } )=>{
-                // const questons = payload.questions;
-                state.challenges.forEach(elem=>{
-                    if( elem.id===payload.id ){
-                        elem.questions = payload.questions;
-                        return;
-                    }
-                })
-            })
-            .addCase(addNewQuestion.fulfilled,( state,{ payload } )=>{
-                state.challenges.forEach(elem=>{
-                    if( elem.id===payload.id ){
-                        elem.questions.push(payload.question);
-                        return;
-                    }
-                })
-            })
+
     }
 });
 

@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import useToast from '../../hooks/useToast';
 import { useLocation,Navigate } from 'react-router-dom';
-import { addNewQuestion } from '../../features/challengesSlice';
+import { addNewQuestion } from '../../features/questionSlice';
 import { useDispatch } from 'react-redux';
 import usePrivateAxios from '../../hooks//usePrivateAxios.js';
 

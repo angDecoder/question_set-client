@@ -18,9 +18,9 @@ export const addNewChallengeApi = async({ privateAxios,title,tags,description,to
             '/challenges/add',
             {title,tags,description}
         );
-        // console.log(res.data);
+        console.log(res.data);
         toast.update({ type : 'promise-resolved', text : "added new challenge" });
-        return  { challenge : res.data.challenge };
+        return  { challenge : {...res.data.challenge,title,tags,description,total : 0, solved : 0} };
     } catch (error) {
         return Promise.reject();
     }

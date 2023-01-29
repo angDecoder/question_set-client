@@ -7,9 +7,9 @@ export const getAllQuestionApi = async ({ id,privateAxios })=>{
             }
         );
 
-        // console.log(res);
+        console.log(res.data);
 
-        return { questions : res.data.questions,id };
+        return { questions : res.data.questions,id,challenge_id : id };
     } catch (error) {
         console.log(error);
     }
